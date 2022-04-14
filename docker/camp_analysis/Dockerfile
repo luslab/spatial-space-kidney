@@ -47,16 +47,17 @@ RUN conda install --name packages -c conda-forge r-dplyr
 RUN conda install --name packages -c conda-forge r-formatr
 RUN conda install --name packages -c conda-forge r-remotes
 RUN conda install --name packages -c conda-forge r-catools
-
-# Install Bioconductor packages
-RUN R -e 'BiocManager::install("EnsDb.Mmusculus.v79")'
-RUN R -e 'BiocManager::install("biomaRt")'
-
 RUN conda install --name packages -c conda-forge r-seurat
 RUN conda install --name packages -c conda-forge r-patchwork
 
+# Install Bioconductor packages
+RUN R -e 'BiocManager::install("EnsDb.Mmusculus.v79")'
 RUN R -e 'BiocManager::install("EnsDb.Hsapiens.v86")'
+RUN R -e 'BiocManager::install("biomaRt")'
+RUN R -e 'BiocManager::install("DESeq2")'
+RUN R -e 'BiocManager::install("apeglm")'
 
+# Install git builds
 RUN R -e "devtools::install_github('dmcable/spacexr', build_vignettes = FALSE)"
 
 
