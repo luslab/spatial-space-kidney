@@ -58,46 +58,5 @@ RUN R -e 'BiocManager::install("DESeq2")'
 RUN R -e 'BiocManager::install("apeglm")'
 
 # Install git builds
+RUN R -e "devtools::install_github('angelolab/FlowSOM', upgrade = FALSE, upgrade_dependencies = FALSE)"
 RUN R -e "devtools::install_github('dmcable/spacexr', build_vignettes = FALSE)"
-
-
-
-# ENV R_HOME /opt/conda/envs/packages/bin/R
-
-# Set default python for reticulate
-# RUN   echo 'RETICULATE_PYTHON = /opt/conda/bin/python' >> /usr/local/lib/R/etc/Renviron
-
-# Set CRAN and BioC repositories for package installations
-# RUN echo 'local({library(BiocManager); r <- repositories(); r["CRAN"] <- "https://cran.rstudio.com/"; options(repos = r)}); \
-#      options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version$platform, R.version$arch, R.version$os)))' >> /usr/local/lib/R/etc/Rprofile.site
-
-# RUN R -e 'r = getOption("repos"); r["CRAN"] <- "https://cran.rstudio.com/"; options(repos = r)'
-
-# Install R Packages
-# RUN R -e "install.packages('devtools', repos = 'https://cran.rstudio.com/')"
-    #   R -e "install.packages('future')" && \
-    #   R -e "install.packages('cowplot')"  && \
-#       R -e "install.packages('clustree')" && \
-#       R -e "install.packages('gridExtra')" && \
-#       R -e "install.packages('getopt')" && \
-#       R -e "install.packages('optparse')" && \
-#       R -e "install.packages('pheatmap')" && \
-#       R -e "install.packages('Seurat')" && \
-#       R -e "install.packages('qdapTools')" && \
-#       R -e "install.packages('patchwork')" && \
-#       R -e "install.packages('ggnewscale')" && \
-#       R -e "remotes::install_github('mojaveazure/seurat-disk')" && \
-#       # R -e "remotes::install_github('satijalab/seurat-wrappers', upgrade = 'default')" && \
-#       R -e "BiocManager::install('limma')" && \
-#       R -e "remotes::install_github('carmonalab/STACAS@1.1.0')" && \
-#       R -e "BiocManager::install('ComplexHeatmap')" && \
-#       R -e "install.packages('patchwork')" && \
-#       R -e "install.packages('ggnewscale')"
-
-# Install github R packages
-# RUN R -e "devtools::install_github('dmcable/spacexr', build_vignettes = FALSE)"
-# RUN   R -e "devtools::install_version('ArrayBin', version = '0.2')" && \
-#       R -e "devtools::install_version('heatmap.plus', version = '1.3')" && \
-#       R -e "devtools::install_github('juliendelile/Antler', dependencies = TRUE)"
-
-
