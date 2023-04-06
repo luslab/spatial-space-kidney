@@ -12,12 +12,12 @@ library(EnsDb.Mmusculus.v79)
 
 # Params
 project.name <- "2022_03_novaseq_PM22082"
-sample.name <- "211125_22"
+sample.name <- "211013_17"
 
 # Setup paths
-data_dir <- "data"
+data_dir <- "2022_space_kidney/data"
 project_dir <- paste0(data_dir, "/", project.name)
-project_output_dir <- paste0(data_dir, "/", project.name, "_gen/", sample.name)
+project_output_dir <- paste0(data_dir, "/", project.name, "_gen_202303/", sample.name)
 rctd_path <- paste0(project_output_dir, "/", sample.name, "_rctd.rds")
 seurat_path <- paste0(project_output_dir, "/", sample.name, "_seurat.rds")
 dir.create(project_output_dir)
@@ -73,30 +73,52 @@ print(plot)
 dev.off()
 
 pdf(paste0(project_output_dir, "/umap.pdf"))
+#plot <- DimPlot(sk, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
 plot <- DimPlot(sk, reduction = "umap")
 print(plot)
 dev.off()
 
+sk.markers <- FindAllMarkers(sk, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+
 # Find DE markers for PCT
-cluster.markers.PCT <- FindMarkers(sk, ident.1 = "PCT", min.pct = 0.25)
-gene_symbols <- ensembldb::select(EnsDb.Mmusculus.v79, keys= rownames(cluster.markers.PCT), keytype = "GENEID", columns = c("SYMBOL","GENEID"))
-rownames(cluster.markers.PCT) <- gene_symbols$SYMBOL
-head(cluster.markers.PCT, n = 20)
+#cluster.markers.PCT <- FindMarkers(sk, ident.1 = "PCT", min.pct = 0.25)
+#rownames(cluster.markers.PCT) <- gene_symbols$SYMBOL
+#gene_symbols <- ensembldb::select(EnsDb.Mmusculus.v79, keys= rownames(cluster.markers.PCT), keytype = "GENEID", columns = c("SYMBOL","GENEID"))
+#head(cluster.markers.PCT, n = 20)
 
 # Find DE markers for PST
-cluster.markers.PST <- FindMarkers(sk, ident.1 = "PST", min.pct = 0.25)
-gene_symbols <- ensembldb::select(EnsDb.Mmusculus.v79, keys= rownames(cluster.markers.PST), keytype = "GENEID", columns = c("SYMBOL","GENEID"))
-rownames(cluster.markers.PST) <- gene_symbols$SYMBOL
-head(cluster.markers.PST, n = 20)
+#cluster.markers.PST <- FindMarkers(sk, ident.1 = "PST", min.pct = 0.25)
+#gene_symbols <- ensembldb::select(EnsDb.Mmusculus.v79, keys= rownames(cluster.markers.PST), keytype = "GENEID", columns = c("SYMBOL","GENEID"))
+#rownames(cluster.markers.PST) <- gene_symbols$SYMBOL
+#head(cluster.markers.PST, n = 20)
 
-# Feature plotmtarget genes
-target_genes <- c("Lrp2", "Aqp11", "Slc34a1")
+# Feature plot target genes
+target_genes <- c("Lrp2", "Aqp11", "Slc34a1", "Hnf4a", "Cldn2", "Fbp1")
 target_genes_ids <- ensembldb::select(EnsDb.Mmusculus.v79, keys=target_genes, keytype="SYMBOL", columns=c("SYMBOL","GENEID"))
 
 pdf(paste0(project_output_dir, "/features.pdf"))
 plot <- FeaturePlot(sk, features = target_genes_ids$GENEID)
 print(plot)
 dev.off()
+
+#target_genes <- c("Scx", "Slc04a1", "Avpr2", "Hk1", "Egr1", "Fos")
+#target_genes_ids <- ensembldb::select(EnsDb.Mmusculus.v79, keys=target_genes, keytype="SYMBOL", columns=c("SYMBOL","GENEID"))
+
+#pdf(paste0(project_output_dir, "/features_neg.pdf"))
+#plot <- FeaturePlot(sk, features = target_genes_ids$GENEID)
+#print(plot)
+#dev.off()
+
+sk.markers %>%
+  group_by(cluster) %>%
+  top_n(n = 10, wt = avg_log2FC) -> top10
+
+pdf(paste0(project_output_dir, "/heatmap.pdf"))
+plot <- DoHeatmap(sk, features = top10$gene) + NoLegend()
+print(plot)
+dev.off()
+
+
 
 
 # Save seurat object

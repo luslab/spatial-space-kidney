@@ -9,12 +9,12 @@ library(ggplot2)
 
 # Params
 project.name <- "2022_03_novaseq_PM22082"
-sample.name <- "211125_22"
+sample.name <- "211004_12"
 
 # Setup paths
-data_dir <- "data"
+data_dir <- "2022_space_kidney/data"
 project_dir <- paste0(data_dir, "/", project.name)
-project_output_dir <- paste0(data_dir, "/", project.name, "_gen/", sample.name)
+project_output_dir <- paste0(data_dir, "/", project.name, "_gen_202303/", sample.name)
 barcodes.path <- paste0(data_dir, "/", project.name, "/", sample.name, "_dge/barcodes.tsv.gz")
 features.path <- paste0(data_dir, "/", project.name, "/", sample.name, "_dge/features.tsv.gz")
 matrix.path <- paste0(data_dir, "/", project.name, "/", sample.name, "_dge/matrix.mtx.gz")
