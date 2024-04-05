@@ -92,9 +92,9 @@ sk.markers <- FindAllMarkers(sk, only.pos = TRUE, min.pct = 0.25, logfc.threshol
 #rownames(cluster.markers.PST) <- gene_symbols$SYMBOL
 #head(cluster.markers.PST, n = 20)
 
-# Feature plot target genes
-target_genes <- c("Lrp2", "Aqp11", "Slc34a1", "Hnf4a", "Cldn2", "Fbp1")
-target_genes_ids <- ensembldb::select(EnsDb.Mmusculus.v79, keys=target_genes, keytype="SYMBOL", columns=c("SYMBOL","GENEID"))
+# # Feature plot target genes
+# target_genes <- c("Lrp2", "Aqp11", "Slc34a1", "Hnf4a", "Cldn2", "Fbp1")
+# target_genes_ids <- ensembldb::select(EnsDb.Mmusculus.v79, keys=target_genes, keytype="SYMBOL", columns=c("SYMBOL","GENEID"))
 
 pdf(paste0(project_output_dir, "/features.pdf"))
 plot <- FeaturePlot(sk, features = target_genes_ids$GENEID)

@@ -54,12 +54,5 @@ RUN mamba install --name packages -c bioconda bioconductor-ensdb.mmusculus.v79
 RUN mamba install --name packages -c bioconda bioconductor-biomart
 RUN mamba install --name packages -c bioconda bioconductor-deseq2
 
-# bioconductor-apeglm 1.20.0
-
-# # Install Bioconductor packages
-# RUN R -e 'BiocManager::install("DESeq2")'
-# RUN R -e 'BiocManager::install("apeglm")'
-
 # Install git builds
-# RUN R -e "devtools::install_github('angelolab/FlowSOM', upgrade = FALSE, upgrade_dependencies = FALSE)"
 RUN R -e "devtools::install_github('dmcable/spacexr', build_vignettes = FALSE)"
