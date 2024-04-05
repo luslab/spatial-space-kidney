@@ -4,7 +4,7 @@
 
 Startup the rstudio container in an envoironment of your choice.
 
-## Analysis
+## Analysis
 
 - Analysis requires a pre-requisite cell atlas model for RCTD to run correctly. We used GSE157079 for this analysis, specifically P0 adult counts and clusters
 - Assuming spatial data has been process via a 10x or 10x like file structure, the files for each sample should be arranged as barcode, features and matrix `.tsv.gz` files in `_dge` suffixed folders. Adjust the folder names in the setup paths sections of `run_rctd_sample.R` to reflect where the source data resides
